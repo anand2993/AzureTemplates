@@ -1,0 +1,18 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+steps:
+- task: AzureResourceManagerTemplateDeployment@3
+  inputs:
+    deploymentScope: 'Resource Group'
+    azureResourceManagerConnection: '<Your Service Connection Name>'
+    subscriptionId: '<Your Subscription ID>'
+    action: 'Create Or Update Resource Group'
+    resourceGroupName: '<Your Resource Group Name>'
+    location: '<Your Location>'
+    templateLocation: 'Linked artifact'
+    csmFile: '$(Build.SourcesDirectory)/template.json'
+    deploymentMode: 'Incremental'
