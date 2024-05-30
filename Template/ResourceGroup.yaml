@@ -1,6 +1,7 @@
 trigger:
 - main
-
+variables:
+- group: MyGroupVeriable
 pool:
   vmImage: 'ubuntu-latest'
 
@@ -8,11 +9,11 @@ steps:
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
     deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: '<Your Service Connection Name>'
-    subscriptionId: '<Your Subscription ID>'
+    azureResourceManagerConnection: $(azureSubscription)
+    subscriptionId: $(subscriptionId)
     action: 'Create Or Update Resource Group'
-    resourceGroupName: '<Your Resource Group Name>'
-    location: '<Your Location>'
+    resourceGroupName: $(resourceGroupName)
+    location: $(Location)
     templateLocation: 'Linked artifact'
-    csmFile: '$(Build.SourcesDirectory)/template.json'
+    csmFile: '$(Build.SourcesDirectory)/IaC/ResourceGroup.json'
     deploymentMode: 'Incremental'
